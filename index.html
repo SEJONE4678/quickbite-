@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBite — Order Food Online | Fast Delivery</title>
+  <meta name="description" content="QuickBite is your premium food delivery app. Order from hundreds of restaurants and get food delivered to your door in 30 minutes or less." />
+  <meta name="keywords" content="food delivery, order food online, restaurants near me, QuickBite" />
+  <meta property="og:title" content="QuickBite — Order Food Online" />
+  <meta property="og:description" content="Discover amazing food from restaurants near you. Fast delivery guaranteed." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ──────────────────────────────────── -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <button class="nav-logo" onclick="showView('home')" id="nav-logo-btn" aria-label="QuickBite Home">
+        <span class="logo-icon">⚡</span>
+        <span>QuickBite</span>
+      </button>
+
+      <button class="nav-location" id="nav-location-btn" onclick="openLocationModal()" aria-label="Change delivery location">
+        <span class="loc-pin">📍</span>
+        <span class="loc-text" id="nav-location-text">T. Nagar, Chennai</span>
+        <span class="loc-arrow">▼</span>
+      </button>
+
+      <div class="nav-search">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="main-search" placeholder="Search restaurants or dishes…" aria-label="Search food" />
+      </div>
+
+      <div class="nav-actions">
+        <button class="nav-btn nav-btn-ghost" id="nav-orders-btn" onclick="openOrdersView()">
+          📜 My Orders
+        </button>
+        <button class="nav-btn nav-btn-ghost" id="nav-signin-btn" onclick="openAuthModal()">
+          👤 Sign In
+        </button>
+        <button class="cart-btn" id="cart-open-btn" onclick="openCart()" aria-label="Open cart">
+          🛒 Cart
+          <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HOME VIEW ────────────────────────────────── -->
+  <div id="view-home" class="view active">
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero" aria-label="Hero section">
+      <div class="hero-bg"></div>
+      <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            🚀 30 min delivery guarantee
+          </div>
+
+          <h1 class="hero-title">
+            Hungry? <br/>
+            We've Got You <br/>
+            <span class="gradient-text">Covered!</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Discover the best food from restaurants near you. Order in seconds, delivered in minutes. 100% satisfaction guaranteed.
+          </p>
+
+          <div class="hero-search" role="search">
+            <input type="text" id="hero-search-input"
+                   placeholder="Search for pizza, burger, biryani…"
+                   aria-label="Search for food" />
+            <button class="hero-search-btn" id="hero-search-btn" aria-label="Search">
+              🔍 Search
+            </button>
+          </div>
+
+          <div class="hero-stats" aria-label="App statistics">
+            <div class="stat-item">
+              <div class="stat-num">500+</div>
+              <div class="stat-label">Restaurants</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">30 min</div>
+              <div class="stat-label">Avg Delivery</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">4.8 ⭐</div>
+              <div class="stat-label">App Rating</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-wrap" aria-hidden="true">
+          <div class="hero-img-blob"></div>
+          <img class="hero-img"
+               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+               alt="Delicious food spread" loading="eager" />
+
+          <div class="hero-floating-card card-1">
+            <div class="float-card-content">
+              <span class="float-icon">⭐</span>
+              <div class="float-text">
+                <div class="label">Rating</div>
+                <div class="value">4.9 Excellent</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-floating-card card-2">
+            <div class="float-card-content">
+              <span class="float-icon">🛵</span>
+              <div class="float-text">
+                <div class="label">Delivery time</div>
+                <div class="value">~28 minutes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section" id="categories-section" aria-label="Food categories">
+      <div class="container">
+        <div class="categories-scroll" id="categories-wrap" role="list" aria-label="Food category filters">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Restaurants -->
+    <section class="section" id="restaurants-section" aria-label="Restaurants near you">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">🍽️ Restaurants Near You</h2>
+          <p class="section-subtitle">Handpicked for quality, taste & speed</p>
+        </div>
+        <div class="restaurants-grid" id="restaurants-grid" role="list" aria-label="Restaurant list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="nav-logo" style="cursor:default">
+              <span class="logo-icon">⚡</span>
+              <span>QuickBite</span>
+            </div>
+            <p>Your favorite food, delivered at lightning speed. Order from 500+ restaurants in your city.</p>
+          </div>
+          <div>
+            <div class="footer-title">Company</div>
+            <div class="footer-links">
+              <a class="footer-link" href="#">About Us</a>
+              <a class="footer-link" href="#">Careers</a>
+              <a class="footer-link" href="#">Press</a>
+              <a class="footer-link" href="#">Blog</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Support</div>
+            <div class="footer-links">
+              <a class="footer-link" href="#">Help Center</a>
+              <a class="footer-link" href="#">Contact Us</a>
+              <a class="footer-link" href="#">Privacy Policy</a>
+              <a class="footer-link" href="#">Terms of Use</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Partner with us</div>
+            <div class="footer-links">
+              <a class="footer-link" href="#">List your Restaurant</a>
+              <a class="footer-link" href="#">Become a Rider</a>
+              <a class="footer-link" href="#">Advertise</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 QuickBite. All rights reserved.</span>
+          <span>Made with ❤️ in India</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- end view-home -->
+
+  <!-- ── RESTAURANT VIEW ──────────────────────────── -->
+  <div id="view-restaurant" class="view">
+    <!-- Rendered dynamically by JS -->
+  </div>
+
+  <!-- ── CHECKOUT VIEW ────────────────────────────── -->
+  <div id="view-checkout" class="view">
+    <div class="container">
+      <div style="padding: 28px 0 10px;">
+        <button onclick="openCart()" style="display:flex;align-items:center;gap:8px;color:var(--text-muted);
+          font-size:.875rem;font-weight:600;cursor:pointer;transition:var(--transition);background:none;border:none;"
+          onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'"
+          id="checkout-back-btn">
+          ← Back to Cart
+        </button>
+        <h1 class="section-title" style="margin-top:12px;">💳 Checkout</h1>
+      </div>
+
+      <div class="checkout-grid">
+        <!-- Left: Forms -->
+        <div>
+          <!-- Delivery Details -->
+          <div class="checkout-section">
+            <div class="checkout-section-title" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <span class="step-num">1</span>
+                Delivery Details
+              </div>
+              <button type="button" onclick="fillDemoCheckout()" style="font-size:0.75rem;padding:4px 12px;background:var(--bg-glass);border:1px solid var(--border-hover);border-radius:var(--radius-full);color:var(--primary);cursor:pointer;font-weight:600;">
+                ⚡ Demo Fill
+              </button>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="del-name">Full Name</label>
+                <input class="form-input" type="text" id="del-name" placeholder="e.g. Priya Sharma" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="del-phone">Phone Number</label>
+                <input class="form-input" type="tel" id="del-phone" placeholder="+91 98765 43210" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="form-grid full" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label" for="del-address">Delivery Address</label>
+                <input class="form-input" type="text" id="del-address" placeholder="House/Flat No., Street, Area…" autocomplete="street-address" />
+              </div>
+            </div>
+            <div class="form-grid" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label" for="del-city">City</label>
+                <input class="form-input" type="text" id="del-city" placeholder="Noida" value="Noida" autocomplete="address-level2" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="del-pincode">Pincode</label>
+                <input class="form-input" type="text" id="del-pincode" placeholder="201301" autocomplete="postal-code" maxlength="6" />
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label" for="del-notes">Delivery Instructions (optional)</label>
+              <input class="form-input" type="text" id="del-notes" placeholder="e.g. Leave at door, Ring bell twice…" />
+            </div>
+          </div>
+
+          <!-- Payment Methods -->
+          <div class="checkout-section">
+            <div class="checkout-section-title">
+              <span class="step-num">2</span>
+              Payment Method
+            </div>
+
+            <div class="payment-methods" role="radiogroup" aria-label="Payment methods">
+              <div class="payment-card selected" id="pay-card" onclick="selectPayment('card')" role="radio" aria-checked="true" tabindex="0">
+                <div class="payment-icon">💳</div>
+                <div class="payment-name">Credit / Debit Card</div>
+                <div class="payment-desc">Visa, Mastercard, RuPay</div>
+              </div>
+              <div class="payment-card" id="pay-upi" onclick="selectPayment('upi')" role="radio" aria-checked="false" tabindex="0">
+                <div class="payment-icon">📱</div>
+                <div class="payment-name">UPI</div>
+                <div class="payment-desc">GPay, PhonePe, Paytm</div>
+              </div>
+              <div class="payment-card" id="pay-cod" onclick="selectPayment('cod')" role="radio" aria-checked="false" tabindex="0">
+                <div class="payment-icon">💵</div>
+                <div class="payment-name">Cash on Delivery</div>
+                <div class="payment-desc">Pay when delivered</div>
+              </div>
+            </div>
+
+            <!-- Card Form -->
+            <div class="card-form active" id="card-form">
+              <div class="form-grid full" style="margin-top:16px">
+                <div class="form-group">
+                  <label class="form-label" for="card-num">Card Number</label>
+                  <input class="form-input" type="text" id="card-num"
+                         placeholder="1234 5678 9012 3456" maxlength="19"
+                         oninput="formatCardNumber(this)" autocomplete="cc-number" />
+                </div>
+              </div>
+              <div class="form-grid" style="margin-top:12px">
+                <div class="form-group">
+                  <label class="form-label" for="card-expiry">Expiry Date</label>
+                  <input class="form-input" type="text" id="card-expiry"
+                         placeholder="MM/YY" maxlength="5"
+                         oninput="formatExpiry(this)" autocomplete="cc-exp" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="card-cvv">CVV</label>
+                  <input class="form-input" type="password" id="card-cvv"
+                         placeholder="•••" maxlength="4" autocomplete="cc-csc" />
+                </div>
+              </div>
+              <div class="form-group" style="margin-top:12px">
+                <label class="form-label" for="card-name">Name on Card</label>
+                <input class="form-input" type="text" id="card-name"
+                       placeholder="As printed on card" autocomplete="cc-name" />
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:14px;font-size:.8rem;color:var(--text-muted);">
+                🔒 Your payment is secured with 256-bit SSL encryption
+              </div>
+            </div>
+
+            <!-- UPI Form -->
+            <div class="upi-form" id="upi-form">
+              <div class="form-group" style="margin-top:16px">
+                <label class="form-label" for="upi-id">UPI ID</label>
+                <input class="form-input" type="text" id="upi-id" placeholder="yourname@upi" autocomplete="off" />
+              </div>
+              <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+                <button style="padding:8px 16px;background:var(--bg-glass);border:1px solid var(--border);
+                  border-radius:var(--radius-full);font-size:.8rem;color:var(--text-secondary);cursor:pointer;"
+                  onclick="document.getElementById('upi-id').value='username@gpay'">📲 GPay</button>
+                <button style="padding:8px 16px;background:var(--bg-glass);border:1px solid var(--border);
+                  border-radius:var(--radius-full);font-size:.8rem;color:var(--text-secondary);cursor:pointer;"
+                  onclick="document.getElementById('upi-id').value='username@paytm'">💳 Paytm</button>
+                <button style="padding:8px 16px;background:var(--bg-glass);border:1px solid var(--border);
+                  border-radius:var(--radius-full);font-size:.8rem;color:var(--text-secondary);cursor:pointer;"
+                  onclick="document.getElementById('upi-id').value='username@ybl'">📱 PhonePe</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary -->
+        <div>
+          <div class="order-summary" id="order-summary">
+            <div class="order-summary-title">🧾 Order Summary</div>
+            <div class="order-summary-items" id="order-summary-items"></div>
+
+            <div class="summary-divider"></div>
+
+            <div class="coupon-section">
+              <input class="coupon-input" type="text" id="coupon-input"
+                     placeholder="Enter coupon code" aria-label="Coupon code" />
+              <button class="coupon-btn" onclick="applyCoupon()" id="apply-coupon-btn">Apply</button>
+            </div>
+
+            <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:12px;">
+              Try: <strong>QUICKBITE</strong> or <strong>FIRST10</strong>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">₹0</span></div>
+            <div class="summary-row"><span>Delivery fee</span><span id="summary-delivery">₹0</span></div>
+            <div class="summary-row"><span>Taxes & fees (5%)</span><span id="summary-taxes">₹0</span></div>
+            <div class="summary-row discount" id="summary-discount-row" style="display:none">
+              <span>🎁 Coupon discount</span>
+              <span id="summary-discount">−₹0</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="summary-total">₹0</span>
+            </div>
+
+            <button class="place-order-btn" id="place-order-btn" onclick="placeOrder()">
+              🚀 Place Order
+            </button>
+
+            <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--text-muted);">
+              🔒 Secure checkout · 100% safe payments
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end view-checkout -->
+
+  <!-- ── TRACKING VIEW ────────────────────────────── -->
+  <div id="view-tracking" class="view">
+    <!-- Rendered dynamically by JS -->
+  </div>
+
+  <!-- ── ORDERS HISTORY VIEW ───────────────────────── -->
+  <div id="view-orders" class="view">
+    <div class="container" style="padding-top: calc(var(--navbar-h) + 20px); padding-bottom: 60px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 24px;">
+        <div>
+          <h1 class="section-title">📜 Order History</h1>
+          <p class="section-subtitle">Real-time order history fetched live from MongoDB database</p>
+        </div>
+        <button onclick="showView('home')" class="nav-btn nav-btn-ghost">← Back to Home</button>
+      </div>
+
+      <div id="orders-list-container" class="orders-grid">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CART DRAWER ──────────────────────────────── -->
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart" aria-modal="true">
+    <div class="cart-header">
+      <span class="cart-title">🛒 Your Cart</span>
+      <button class="cart-close" onclick="closeCart()" id="cart-close-btn" aria-label="Close cart">✕</button>
+    </div>
+
+    <div class="cart-restaurant-name" id="cart-restaurant-name" style="display:none"></div>
+
+    <div class="cart-items" id="cart-items">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div class="cart-empty" id="cart-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:12px;color:var(--text-muted);">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty</p>
+      <p style="font-size:.82rem;text-align:center">Add items from a restaurant to get started</p>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-summary" id="cart-summary"></div>
+      <button class="checkout-btn" id="checkout-btn" onclick="goToCheckout()" disabled>
+        🚀 Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <!-- ── ORDER CONFIRMATION MODAL ─────────────────── -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Order confirmed">
+    <div class="modal">
+      <div class="modal-icon">🎉</div>
+      <div class="modal-title">Order Confirmed!</div>
+      <div class="modal-desc">
+        Your order has been placed successfully! Our restaurant partner is preparing your food right now.
+      </div>
+      <div class="modal-order-id" id="modal-order-id">QB123456</div>
+      <button class="modal-btn" id="track-order-btn" onclick="startTracking()">
+        📦 Track My Order
+      </button>
+    </div>
+  </div>
+
+  <!-- ── AUTHENTICATION MODAL (SIGN IN / REGISTER) ─── -->
+  <div class="modal-overlay" id="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign In or Register">
+    <div class="modal auth-modal">
+      <button class="cart-close" onclick="closeAuthModal()" style="position:absolute;top:16px;right:16px;">✕</button>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" onsubmit="handleLogin(event)" style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
+        <div style="display:flex;justify-content:flex-end;">
+          <button type="button" onclick="fillDemoLogin()" style="font-size:0.75rem;padding:3px 10px;background:var(--bg-glass);border:1px solid var(--border-hover);border-radius:var(--radius-full);color:var(--primary);cursor:pointer;font-weight:600;">
+            ⚡ Demo Account
+          </button>
+        </div>
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input class="form-input" type="email" id="login-email" placeholder="name@example.com" required />
+        </div>
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="login-password">Password</label>
+          <input class="form-input" type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="modal-btn" style="margin-top:10px;">
+          🔐 Sign In
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" onsubmit="handleRegister(event)" style="display:none;flex-direction:column;gap:14px;margin-top:16px;">
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="reg-name">Full Name</label>
+          <input class="form-input" type="text" id="reg-name" placeholder="e.g. Priya Sharma" required />
+        </div>
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <input class="form-input" type="email" id="reg-email" placeholder="name@example.com" required />
+        </div>
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="reg-phone">Phone Number</label>
+          <input class="form-input" type="tel" id="reg-phone" placeholder="+91 98765 43210" />
+        </div>
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="reg-password">Password</label>
+          <input class="form-input" type="password" id="reg-password" placeholder="Create a password" required minlength="6" />
+        </div>
+        <button type="submit" class="modal-btn" style="margin-top:10px;">
+          ✨ Create Account
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── LOCATION SELECTOR MODAL (TAMIL NADU) ─────── -->
+  <div class="modal-overlay" id="location-modal-overlay" role="dialog" aria-modal="true" aria-label="Select Delivery Location">
+    <div class="modal location-modal">
+      <button class="cart-close" onclick="closeLocationModal()" style="position:absolute;top:16px;right:16px;">✕</button>
+
+      <div style="text-align:left;margin-bottom:16px;">
+        <div style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;display:flex;align-items:center;gap:8px;">
+          📍 Delivery Location
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-top:4px;">
+          Select your District and Sub-division area in Tamil Nadu
+        </p>
+      </div>
+
+      <!-- District Selector -->
+      <div class="form-group" style="text-align:left;margin-bottom:16px;">
+        <label class="form-label" for="district-select">Select District (Tamil Nadu)</label>
+        <select class="form-input" id="district-select" onchange="onDistrictChange(this.value)" style="background:var(--bg-card);color:var(--text-primary);">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+
+      <!-- Area / Sub-division List -->
+      <div style="text-align:left">
+        <label class="form-label">Popular Areas / Sub-divisions</label>
+        <div class="areas-grid" id="areas-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOAST CONTAINER ──────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-label="Notifications"></div>
+
+  <!-- ── SCROLL TO TOP ─────────────────────────────── -->
+  <button class="scroll-top-btn" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+          aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <!-- ── SCRIPTS ──────────────────────────────────── -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
